@@ -2,3 +2,5 @@ images/
 responses/
 __pycache__/
 *.example
+*.example2
+.gitignore
