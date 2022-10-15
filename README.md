@@ -23,17 +23,17 @@ To run this program, you will need a `Live` Scale.ai API key and is a required c
 `# python3 quality-test.py --key "live_XXXXXXXXXXXXXXXXXXXXXXXXX"`
 
 Assuming the key is valid, you will see a list of menu items. These are project names that the key is associated with. This is what the menu looks like:
-
-`------------------------------------------------------------------------------------`
-`-                                Scale Project Menu                                -`
-`------------------------------------------------------------------------------------`
-`[0]: sunshineTest                               [1]: sunshineTestTwo`
-`[2]: Traffic Sign Detection                     [3]: Sample Accounts Payable Invoices`
-`[4]: Test Project                               [5]: Test_Project5`
-`.....`
-`------------------------------------------------------------------------------------`
-`Enter your option (whole numbers only): 2`
-
+```
+------------------------------------------------------------------------------------
+-                                Scale Project Menu                                -
+------------------------------------------------------------------------------------
+[0]: sunshineTest                               [1]: sunshineTestTwo
+[2]: Traffic Sign Detection                     [3]: Sample Accounts Payable Invoices
+[4]: Test Project                               [5]: Test_Project5
+.....
+------------------------------------------------------------------------------------
+Enter your option (whole numbers only): 2
+```
 Once you enter the number associated with the project your interested in, the program will process all tasks and perform tests against each task & image. A progress bar will appear to allow the auditor to track progress:
 
 `Processing Tasks:  62%|███████████████████████████████▎                  | 5/8 [00:03<00:01,  1.71it/s]`
