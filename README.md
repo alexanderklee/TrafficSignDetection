@@ -46,3 +46,6 @@ Once completed, a message will appear letting the auditor know where the output 
 
 ## Output Files
 The script creates two directories in the $CWD - one is called `images` and the other is `responses`. The `images` directory is where the original images are kept and is used by auditors to quickly look at suspect images. The `responses` directory is a list of files, named using the `task_id` and contains a brief overview of the test status in JSON format. 
+
+## Improvements
+Where this project can improve is including more test scenarios. The scenarios I would like to add are detectors for bright/dark spots, flashes, reflections, camoflauged objects, and using a better blur detection scheme like Fast-Fourier Transform (FFT). Beyond adding more quality tests, the program itself could be better constructed using more object-oriented approaches. 
