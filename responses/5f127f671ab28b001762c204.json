@@ -1,0 +1,11 @@
+{
+    "TaskId": "5f127f671ab28b001762c204",
+    "ImageName": "traffic_sign_4.jpg",
+    "Blur": "NOTE: Images are not blurry",
+    "MissingLabels": "NOTE: All labels present",
+    "Occlusions": "NOTE: Images are are within occlusion threshold",
+    "Truncation": "NOTE: Images are within truncation threshold",
+    "BigBbox": "WARN: Bounding boxes >=20% of image area present, please review",
+    "HighLabel": "WARN: A high number of labels are present, verify quality",
+    "BboxOverlap": "WARN: Bounding box overlap detected, verify quality"
+}
