@@ -1,2 +1,4 @@
-./images/
-./responses
+images/
+responses/
+__pycache__/
+*.example
