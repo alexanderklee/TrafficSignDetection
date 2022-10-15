@@ -9,6 +9,14 @@ def s2f(x):
 def s2d(y):
     return int(Decimal(y))
 
+def displayMsg():
+    print("------------------------------------------------------------------------------------")
+    print()
+    print("Completed!")
+    print("Images downloaded to the images/ directory.")
+    print("Log files written to the responses/ directory.")
+    print()
+
 # Helper function to initialize a dict and values to FALSE
 def initFlagsToFalse():
     flagsDict = {}

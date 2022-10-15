@@ -8,7 +8,7 @@ def download_images_get_dims(imgUrl, imgDir):
     
     # Get image metadata and calculate blurriness
     urllib.request.urlretrieve(imgUrl, saveDir)
-    print("     Saving task image to ", saveDir)
+    # print("     Saving task image to ", saveDir)
     imgData = cv2.imread(saveDir)
     height = imgData.shape[0]
     width = imgData.shape[1]

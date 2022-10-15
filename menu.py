@@ -21,7 +21,8 @@ def display(projList):
             newline = 0 
             
         # menuIdx += 1
-    
+        
+    print("------------------------------------------------------------------------------------")
     option = input("Enter your option (whole numbers only): ")
     
     if option.strip().isdigit():
@@ -34,4 +35,5 @@ def display(projList):
     else:
         print("Invalid Input: Please enter whole numbers only")
     
+    print()
     return(menuItem[option])

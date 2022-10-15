@@ -40,6 +40,6 @@ def processFlags_dump_to_file(flagsDict, task_id, imgName, respFile):
     else:
         quality_responses['BboxOverlap'] = 'NOTE: No bounding box overlap detected'
     
-    print("     Writing test responses to ", respFile)
+    # print("     Writing test responses to ", respFile)
     with open(respFile, 'w') as f:
         f.write(json.dumps(quality_responses, indent=4))
