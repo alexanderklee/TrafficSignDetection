@@ -1,5 +1,5 @@
-import sys, time
-from pickle import TRUE
+import sys, signal, os
+from time import sleep
 
 # My modules
 import iou, img, helper, flags, menu
@@ -22,6 +22,49 @@ def main():
     occ_thresh = 50
     trunc_thresh = 50
     
+    # Setup some directories (images, repsonses) in cwd
+    imgDir, respDir = helper.setupDirs()
+    
+    # Need to define signal handler within the main func
+    # to ensure variable state (or scope) is accessible
+    # inside the signal function
+    def handler(signum, frame):
+        print()
+        print("Ctrl-C Caught, exiting program now")
+        
+        ##############################################
+        # Commenting file/directory removal for now  #
+        # in the case the logs are needed even after #
+        # a SIGINT is called                         #
+        ############################################## 
+        # print("Cleaning up images/ and repsonses/directories ..")      
+        # # Remove all images in the images/ directory
+        # files = os.listdir(imgDir)
+        # for file in files: 
+        #     pathfile = imgDir + file
+        #     print("  Deleting images: ", pathfile)
+        #     os.remove(pathfile)
+        
+        # # Delete images/ directory
+        # print("  Deleting images/ directory: ", imgDir)
+        # os.rmdir(imgDir)
+        
+        # # Remove all files in the responses/ directory
+        # files = os.listdir(respDir)
+        # for file in files: 
+        #     pathfile = respDir + file
+        #     print("  Deleting log file: ", pathfile)
+        #     os.remove(pathfile)
+        
+        # # Delete responses/ directory
+        # print("  Deleting responses/ directory: ", respDir)
+        # os.rmdir(respDir)
+        
+        sys.exit(1)
+        
+    # Register signal event
+    signal.signal(signal.SIGINT, handler)
+    
     # Validate inputted key
     try:
         projList = client.projects()
@@ -30,8 +73,8 @@ def main():
         print(err.message)
         sys.exit(1)
     
-    # Setup some directories (images, repsonses) in cwd
-    imgDir, respDir = helper.setupDirs()
+    # # Setup some directories (images, repsonses) in cwd
+    # imgDir, respDir = helper.setupDirs()
      
     # Retrieve the COMPLETED tasks from the user-specified project
     try: 
@@ -49,7 +92,14 @@ def main():
     # Iterate through project tasks and do some quality checks along the way
     with tqdm(total=task_count, desc='Processing Tasks') as pbar:
         for task in tasks:
-            # print("Working on task: ", task.task_id)
+            # Print current Task ID being worked on
+            # (note: A newline is produced in tqdm because of the code below )
+            # (      The progression of the bar looks sorta nice. You can    )
+            # (      remove the two lines below if you want to see a single  )
+            # (      self-updating progress bar                              )
+            sys.stdout.write(" Current Task ID: " + task.task_id + '%\r')
+            sys.stdout.flush()  
+            # print(f" Current Task ID: {task.task_id:s}", end="\r")
             
             # Initialize bbox dict to empty for each new task
             bbox_dict = {}
@@ -66,23 +116,23 @@ def main():
             imgHeight, imgWidth, imgBlur, imgArea, saveDir, imgName = img.download_images_get_dims(imgUrl, imgDir)
             
             if imgBlur <= 400:
-                flagsDict["blurFlag"] = TRUE
+                flagsDict["blurFlag"] = True
         
             # Iterate over all annotations
             for annotation in task.response['annotations']:
                 # Flag missing Labels
                 if not annotation['label']:
-                    flagsDict["labelsFlag"] = TRUE
+                    flagsDict["labelsFlag"] = True
                     
                 # Flag 50% or Higher occlusions due to bad annotation or bad image
                 of = helper.s2f(task.response['annotations'][0]['attributes']['occlusion'])
                 if (of >= occ_thresh):
-                    flagsDict["occFlag"] = TRUE
+                    flagsDict["occFlag"] = True
                 
                 # Flag 50% or Higher truncation due to bad annotation or bad image
                 tf = helper.s2f(task.response['annotations'][0]['attributes']['truncation'])
                 if (tf >= trunc_thresh):
-                    flagsDict["truncFlag"] = TRUE
+                    flagsDict["truncFlag"] = True
                 
                 # Big bounding box with respect to image area possible bad annotation or
                 # bad sample image
@@ -90,11 +140,11 @@ def main():
                 bbox_area = annotation['width'] * annotation['height']
                 bbox_coverage = (bbox_area / imgArea) * 100
                 if (bbox_coverage >= 0.2):
-                    flagsDict["bigbboxFlag"] = TRUE
+                    flagsDict["bigbboxFlag"] = True
                 
                 # High number of labels, more prone to annotator error
                 if (len(task.response['annotations']) >= 10):
-                    flagsDict["highlabelFlag"] = TRUE
+                    flagsDict["highlabelFlag"] = True
                 
                 # Storing bounding box coords to be used for overlapping bbox tests
                 # Assuming "left" and "top" is the top-left bbox corner (0,0)
@@ -131,13 +181,13 @@ def main():
                 for box2idx in range(box1idx+1,len(bbox_dict.keys())):
                     score = iou.calc(bbox_dict[box1idx], bbox_dict[box2idx])
                     if (score > iou_thresh):
-                        flagsDict["bboxoverlapFlag"] = TRUE
+                        flagsDict["bboxoverlapFlag"] = True
                         # print(f"calc_iou(bbox[{box1idx}], bbox_dict[{box2idx}]) = {score}")
             
             # Process test flags and write out responses file
             flags.processFlags_dump_to_file(flagsDict, task.task_id, imgName, respFile)
             
-            time.sleep(0.1)    
+            sleep(0.1)    
             pbar.update(1)
             
     helper.displayMsg()
