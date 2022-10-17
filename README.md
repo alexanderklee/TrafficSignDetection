@@ -21,10 +21,10 @@ quality-test.py
 |  |__torch-iou.py
 |
 |__{$PROJNAME}
-|  |__images
-|     |__*.(jpg|png)
-|  |__responses
-|     |__{$TASK_ID}.json
+   |__images
+      |__*.(jpg|png)
+   |__responses
+      |__{$TASK_ID}.json
 ```
 
 ## Code Overview
