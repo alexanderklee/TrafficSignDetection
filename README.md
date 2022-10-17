@@ -53,7 +53,7 @@ Once completed, a message will appear letting the auditor know where the output 
 
 ## Output Files
 
-The script creates two directories in the $CWD - one is called `images` and the other is `responses`. The `images` directory is where the original images are kept and is used by auditors to quickly look at suspect images. The `responses` directory is a list of files, named using the `task_id` and contains a brief overview of the test status in JSON format.
+The script creates three directories. The first directory is a parent directory named after the **project name**. The other two directories are sub-directories where one is called `images` and the other is `responses`. The `images` directory is where the original images are stored and can be used by auditors to quickly inspect images. The `responses` directory is a list of files, named using the `task_id` and contains a brief overview of the test status in JSON format.
 
 ## Improvements
 

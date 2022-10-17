@@ -1,7 +1,12 @@
 import sys, signal, os
 from time import sleep
 
-# My modules
+# Append $CWD/modules/ to PyMod Path
+modPath = os.getcwd() + "/modules/"
+sys.path.append(modPath)
+
+# Importing modules from $CWD/modules/ directory
+# Note: IDE isn't aware of $CWD/modules
 import iou, img, helper, flags, menu
 
 # Progress bar
@@ -21,9 +26,6 @@ def main():
     iou_thresh = 0
     occ_thresh = 50
     trunc_thresh = 50
-    
-    # Setup some directories (images, repsonses) in cwd
-    imgDir, respDir = helper.setupDirs()
     
     # Need to define signal handler within the main func
     # to ensure variable state (or scope) is accessible
@@ -73,8 +75,8 @@ def main():
         print(err.message)
         sys.exit(1)
     
-    # # Setup some directories (images, repsonses) in cwd
-    # imgDir, respDir = helper.setupDirs()
+    # Setup some directories (images, repsonses) in cwd
+    imgDir, respDir = helper.setupDirs(pName)
      
     # Retrieve the COMPLETED tasks from the user-specified project
     try: 

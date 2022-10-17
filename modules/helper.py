@@ -30,9 +30,9 @@ def initFlagsToFalse():
     
     return(flagsDict)
 
-def setupDirs():
-    imgDir = os.getcwd() + "/images/"
-    respDir = os.getcwd() + "/responses/"
+def setupDirs(pName):
+    imgDir = os.getcwd() + "/" + pName + "/images/"
+    respDir = os.getcwd() + "/" + pName + "/responses/"
     os.makedirs(imgDir, exist_ok=True)
     os.makedirs(respDir, exist_ok=True)
     
