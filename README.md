@@ -8,6 +8,25 @@ Producing high quality machine learning (ML) test datasets is paramount to insur
 
 To address the data labeling process at scale, software is required to help automate the tasks typically performed by humans in the loop (HITL). This program leverages Python and the Scale.ai API's to help automate the auditing process. This script uses the `ScaleClient` to addess the Scale.ai infrastructure to extract project, task, and dataset information that will help facilitate the auditing tasks programmatically. Other libraries like `Shapely` and `cv2` are used to perform bounding box (bbox) operations and blur detection. Lastly, this script uses basic geometry and inference to detect (or warn) if annotations/labels are suspicious enough to be flagged.
 
+## File & Folder Structure
+
+```
+quality-test.py
+|__modules
+|  |__img.py
+|  |__iou.py
+|  |__flags.py
+|  |__menu.py
+|  |__helper.py
+|  |__torch-iou.py
+|
+|__{$PROJNAME}
+|  |__images
+|     |__*.(jpg|png)
+|  |__responses
+|     |__{$TASK_ID}.json
+```
+
 ## Code Overview
 
 The code is split across seven (7) files. These files and their descriptions are as follows:
