@@ -26,6 +26,7 @@ def main():
     iou_thresh = 0
     occ_thresh = 50
     trunc_thresh = 50
+    bbox_area_thresh = 0.2
     
     # Need to define signal handler within the main func
     # to ensure variable state (or scope) is accessible
@@ -141,7 +142,7 @@ def main():
                 # Note: assumption the width and height data from Task are in pixels
                 bbox_area = annotation['width'] * annotation['height']
                 bbox_coverage = (bbox_area / imgArea) * 100
-                if (bbox_coverage >= 0.2):
+                if (bbox_coverage >= bbox_area_thresh):
                     flagsDict["bigbboxFlag"] = True
                 
                 # High number of labels, more prone to annotator error
